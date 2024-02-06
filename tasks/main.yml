@@ -25,7 +25,7 @@
 - name: Start keycloak container
   community.docker.docker_container:
     name: "{{ container_keycloak_container_name }}"
-    image: "{{ container_keycloak_image }}:{{ docker_keycloak_tag }}"
+    image: "{{ container_keycloak_image }}:{{ container_keycloak_tag }}"
     networks:
       - name: "{{ container_keycloak_network }}"
     restart_policy: "{{ container_keycloak_container_restart_policy }}"
@@ -45,5 +45,3 @@
       KC_PROXY: "{{ container_keycloak_proxy_mode | default('edge') }}"
     labels: "{{ container_keycloak_container_labels | default(omit) }}"
     command: start
-
-

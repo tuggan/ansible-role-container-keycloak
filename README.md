@@ -1,7 +1,7 @@
-container-keycloak
+container_keycloak
 =========
 
-Install and configure [keycloak](https://www.keycloak.org/) as a container.
+Install and configure [KeyCloak](https://www.keycloak.org/) as a container.
 
 Requirements
 ------------
@@ -43,14 +43,14 @@ Example Playbook
 
     - hosts: ingress
       roles:
-        - tuggan.container-keycloak
+        - tuggan.container_keycloak
       vars:
         container_keycloak_network: apps
         container_keycloak_admin: admin
         container_keycloak_admin_password: "{{ secret_keycloak_admin_password }}"
         container_keycloak_hostname: auth.example.com
         container_keycloak_db: postgres
-        container_keycloak_db_url: jdbc:postgresql://keycloak.ip/keycloak
+        container_keycloak_db_url: jdbc:postgresql://database/keycloak
         container_keycloak_db_username: keycloak
         container_keycloak_db_password: "{{ secret_keycloak_db_password }}"
         container_keycloak_container_labels:

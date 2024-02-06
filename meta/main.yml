@@ -1,14 +1,16 @@
 galaxy_info:
   author: Dennis Vesterlund
   description: Install and configure KeyCloak container.
+  role_name: container_keycloak
+  namespace: tuggan
 
   license: BSD-3-Clause
 
   min_ansible_version: '2.9'
 
   galaxy_tags:
-   - keycloak
-   - iam
-   - container
+    - keycloak
+    - iam
+    - container
 
 dependencies: []

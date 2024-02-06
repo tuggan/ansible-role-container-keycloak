@@ -19,6 +19,3 @@ jobs:
         uses: ansible/ansible-lint@main
         with:
           args: "."
-
-
-
