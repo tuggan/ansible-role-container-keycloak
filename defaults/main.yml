@@ -1,0 +1,10 @@
+---
+# defaults file for docker-keycloak
+container_keycloak_network: keycloak
+
+
+container_keycloak_container_name: keycloak
+container_keycloak_image: quay.io/keycloak/keycloak
+container_keycloak_tag: "23.0"
+
+container_keycloak_container_restart_policy: unless-stopped
