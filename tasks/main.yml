@@ -17,31 +17,22 @@
     sysctl_set: true
     reload: true
 
-- name: Create keycloak network
-  community.docker.docker_network:
-    name: "{{ container_keycloak_network }}"
-    state: present
+- name: Check if docker is installed
+  ansible.builtin.command: docker --version
+  register: docker_valid
+  ignore_errors: true
+  changed_when: false
 
-- name: Start keycloak container
-  community.docker.docker_container:
-    name: "{{ container_keycloak_container_name }}"
-    image: "{{ container_keycloak_image }}:{{ container_keycloak_tag }}"
-    networks:
-      - name: "{{ container_keycloak_network }}"
-    restart_policy: "{{ container_keycloak_container_restart_policy }}"
-    env:
-      KEYCLOAK_ADMIN: "{{ container_keycloak_admin | default(omit) }}"
-      KEYCLOAK_ADMIN_PASSWORD: "{{ container_keycloak_admin_password | default(omit) }}"
-      KC_DB_URL: "{{ container_keycloak_db_url | default(omit) }}"
-      KC_DB: "{{ container_keycloak_db }}"
-      KC_DB_USERNAME: "{{ container_keycloak_db_username }}"
-      KC_DB_PASSWORD: "{{ container_keycloak_db_password }}"
-      KC_FEATURES: "{{ container_keycloak_features | default(omit) }}"
-      KC_HOSTNAME: "{{ container_keycloak_hostname | default(omit) }}"
-      KC_HEALTH_ENABLED: "{{ container_keycloak_health_enabled | default('true') }}"
-      KC_METRICS_ENABLED: "{{ container_keycloak_metrics_enabled | default('true') }}"
-      KC_HTTPS_KEY_STORE_FILE: "{{ container_keycloak_key_store_file | default(omit) }}"
-      KC_HTTPS_KEY_STORE_PASSWORD: "{{ container_keycloak_key_store_password | default(omit) }}"
-      KC_PROXY: "{{ container_keycloak_proxy_mode | default('edge') }}"
-    labels: "{{ container_keycloak_container_labels | default(omit) }}"
-    command: start
+- name: Check if podman is installed
+  ansible.builtin.command: podman --version
+  register: podman_valid
+  ignore_errors: true
+  changed_when: false
+
+- name: Include docker tasks
+  ansible.builtin.include_tasks: docker.yml
+  when: not docker_valid.failed
+
+- name: Include podman tasks
+  ansible.builtin.include_tasks: podman.yml
+  when: not podman_valid.failed
